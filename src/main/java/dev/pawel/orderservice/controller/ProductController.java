@@ -1,7 +1,7 @@
 package dev.pawel.orderservice.controller;
 
 import dev.pawel.orderservice.controller.dto.ProductDto;
-import dev.pawel.orderservice.domain.service.ProductService;
+import dev.pawel.orderservice.domain.service.product.ProductService;
 import dev.pawel.orderservice.infrastucture.mapper.DtoMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;

@@ -1,7 +1,7 @@
-package dev.pawel.orderservice.domain.service;
+package dev.pawel.orderservice.domain.service.product;
 
 import dev.pawel.orderservice.domain.product.model.Product;
-import dev.pawel.orderservice.infrastucture.repository.ProductRepository;
+import dev.pawel.orderservice.infrastucture.repository.product.ProductRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
