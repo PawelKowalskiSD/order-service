@@ -4,6 +4,7 @@ import dev.pawel.orderservice.domain.product.model.Product;
 import jakarta.persistence.*;
 
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -11,21 +12,26 @@ import java.util.List;
 @Entity
 public class Order {
     @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-    private Date dateOfCreatedOrder;
+    private LocalDate dateOfCreatedOrder;
     private String orderNumber;
     private long piece;
     private BigDecimal totalCost;
-    @OneToMany
-    private List<Product> products = new ArrayList<>();
 
-    public Order(Date dateOfCreatedOrder, String orderNumber, long piece, BigDecimal totalCost, List<Product> products) {
+
+    public Order(LocalDate dateOfCreatedOrder, String orderNumber, long piece, BigDecimal totalCost) {
         this.dateOfCreatedOrder = dateOfCreatedOrder;
         this.orderNumber = orderNumber;
         this.piece = piece;
         this.totalCost = totalCost;
-        this.products = products;
+    }
+
+    public Order(String id, LocalDate dateOfCreatedOrder, String orderNumber, long piece, BigDecimal totalCost) {
+        this.id = id;
+        this.dateOfCreatedOrder = dateOfCreatedOrder;
+        this.orderNumber = orderNumber;
+        this.piece = piece;
+        this.totalCost = totalCost;
     }
 
     public Order() {
@@ -35,7 +41,7 @@ public class Order {
         return id;
     }
 
-    public Date getDateOfCreatedOrder() {
+    public LocalDate getDateOfCreatedOrder() {
         return dateOfCreatedOrder;
     }
 
@@ -49,9 +55,5 @@ public class Order {
 
     public BigDecimal getTotalCost() {
         return totalCost;
-    }
-
-    public List<Product> getProducts() {
-        return products;
     }
 }

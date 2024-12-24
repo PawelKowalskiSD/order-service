@@ -34,9 +34,9 @@ public class ProductController {
         return ResponseEntity.ok(dtoMapper.mapToProductDto(productService.create(dtoMapper.mapToProduct(productDto))));
     }
 
-    @PutMapping
-    public ResponseEntity<ProductDto> editProduct(@RequestBody ProductDto productDto) {
-        return ResponseEntity.ok(dtoMapper.mapToProductDto(productService.upgradeProduct(dtoMapper.mapToProduct(productDto))));
+    @PatchMapping(value = "{productId}")
+    public ResponseEntity<ProductDto> editProduct(@PathVariable String productId, @RequestBody ProductDto productDto) {
+        return ResponseEntity.ok(dtoMapper.mapToProductDto(productService.upgradeProduct(productId, dtoMapper.mapToProduct(productDto))));
     }
 
     @DeleteMapping(value = "{productId}")

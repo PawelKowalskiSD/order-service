@@ -38,17 +38,7 @@ public class DtoMapper {
                 order.getDateOfCreatedOrder(),
                 order.getOrderNumber(),
                 order.getPiece(),
-                order.getTotalCost(),
-                mapToDtoProductList(order.getProducts()));
-    }
-
-    public Order mapToOrder(OrderDto orderDto) {
-        return new Order(
-                orderDto.dateOfCreatedOrder(),
-                orderDto.orderNumber(),
-                orderDto.piece(),
-                orderDto.totalCost(),
-                mapToProductList(orderDto.productsDto()));
+                order.getTotalCost());
     }
 
     private List<Product> mapToProductList(List<ProductDto> products) {

@@ -24,14 +24,14 @@ public class OrderController {
     }
 
     @PostMapping
-    public ResponseEntity<OrderDto> createOrder(@RequestBody OrderDto orderDto) {
-        return ResponseEntity.ok(dtoMapper.mapToDtoOrder(orderService.create(dtoMapper.mapToOrder(orderDto))));
+    public ResponseEntity<OrderDto> createOrder() {
+        return ResponseEntity.ok(dtoMapper.mapToDtoOrder(orderService.create()));
     }
 
-    @PostMapping(value = "add")
-    public ResponseEntity<OrderDto> addProductToOrder(@RequestBody OrderDto orderDto) {
-        return ResponseEntity.ok(dtoMapper.mapToDtoOrder(orderService.addProduct(dtoMapper.mapToOrder(orderDto))));
-    }
+//    @PostMapping(value = "add")
+//    public ResponseEntity<OrderDto> addProductToOrder(@RequestBody OrderDto orderDto) {
+//        return ResponseEntity.ok(dtoMapper.mapToDtoOrder(orderService.addProduct(dtoMapper.mapToOrder(orderDto))));
+//    }
 
     @DeleteMapping(value = "{productId}")
     public ResponseEntity<OrderDto> deleteProduct(@PathVariable String productId) {

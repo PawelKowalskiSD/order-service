@@ -1,9 +1,7 @@
 package dev.pawel.orderservice.domain.product.model;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import dev.pawel.orderservice.domain.order.model.Order;
+import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 
@@ -20,6 +18,7 @@ public class Product {
         this.name = name;
         this.price = price;
     }
+
 
     public Product(String name, BigDecimal price) {
         this.name = name;
