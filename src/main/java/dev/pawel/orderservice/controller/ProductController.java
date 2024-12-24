@@ -24,9 +24,24 @@ public class ProductController {
         return ResponseEntity.ok(dtoMapper.mapToDtoProductList(productService.findAllProducts()));
     }
 
+    @GetMapping(value = "{productId}")
+    public ResponseEntity<ProductDto> getProduct(@PathVariable String productId) {
+        return ResponseEntity.ok(dtoMapper.mapToProductDto(productService.findProductById(productId)));
+    }
+
     @PostMapping
     public ResponseEntity<ProductDto> createProduct(@RequestBody ProductDto productDto) {
         return ResponseEntity.ok(dtoMapper.mapToProductDto(productService.create(dtoMapper.mapToProduct(productDto))));
     }
 
+    @PutMapping
+    public ResponseEntity<ProductDto> editProduct(@RequestBody ProductDto productDto) {
+        return ResponseEntity.ok(dtoMapper.mapToProductDto(productService.upgradeProduct(dtoMapper.mapToProduct(productDto))));
+    }
+
+    @DeleteMapping(value = "{productId}")
+    public ResponseEntity<Void> deleteProduct(@PathVariable String productId) {
+        productService.deleteProductFromDbById(productId);
+        return ResponseEntity.ok().build();
+    }
 }

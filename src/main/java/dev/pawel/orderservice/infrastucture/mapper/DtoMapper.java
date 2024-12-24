@@ -35,6 +35,7 @@ public class DtoMapper {
     public OrderDto mapToDtoOrder(Order order) {
         return new OrderDto(
                 order.getId(),
+                order.getDateOfCreatedOrder(),
                 order.getOrderNumber(),
                 order.getPiece(),
                 order.getTotalCost(),
@@ -43,6 +44,7 @@ public class DtoMapper {
 
     public Order mapToOrder(OrderDto orderDto) {
         return new Order(
+                orderDto.dateOfCreatedOrder(),
                 orderDto.orderNumber(),
                 orderDto.piece(),
                 orderDto.totalCost(),

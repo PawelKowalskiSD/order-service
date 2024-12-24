@@ -5,6 +5,7 @@ import jakarta.persistence.*;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 @Entity
@@ -12,13 +13,15 @@ public class Order {
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
+    private Date dateOfCreatedOrder;
     private String orderNumber;
     private long piece;
     private BigDecimal totalCost;
     @OneToMany
     private List<Product> products = new ArrayList<>();
 
-    public Order(String orderNumber, long piece, BigDecimal totalCost, List<Product> products) {
+    public Order(Date dateOfCreatedOrder, String orderNumber, long piece, BigDecimal totalCost, List<Product> products) {
+        this.dateOfCreatedOrder = dateOfCreatedOrder;
         this.orderNumber = orderNumber;
         this.piece = piece;
         this.totalCost = totalCost;
@@ -30,6 +33,10 @@ public class Order {
 
     public String getId() {
         return id;
+    }
+
+    public Date getDateOfCreatedOrder() {
+        return dateOfCreatedOrder;
     }
 
     public String getOrderNumber() {
