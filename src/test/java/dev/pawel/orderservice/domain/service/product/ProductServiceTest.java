@@ -61,6 +61,12 @@ class ProductServiceTest {
     @Test
     void shouldCreateProduct() {
         //Given
+        Product product1 = new Product("1", "product1", new BigDecimal("20"));
+        when(productRepository.save(product1)).thenReturn(product1);
+        //When
+        Product result = productService.create(product1);
+        //Then
+        verify(productRepository, times(1)).save(result);
 
     }
     @Test
