@@ -28,7 +28,7 @@ public class ProductService {
     }
 
     public Product upgradeProduct(String productId, Product product) {
-        Product productInDatabase = findProductById(productId);
+        Product productInDatabase = productRepository.findById(productId).orElseThrow();
         String name = product.getName() != null ? product.getName() : productInDatabase.getName();
         BigDecimal price = product.getPrice() != null ? product.getPrice() : productInDatabase.getPrice();
         Product upgradedProduct = new Product(productId, name, price);
