@@ -30,6 +30,10 @@ public class OrderService {
         return orderRepository.findById(orderId).orElseThrow();
     }
 
+    public List<Order> findAllOrders() {
+        return orderRepository.findAll();
+    }
+
     @Transactional
     public Order create(SaveOrderRequest saveOrderRequest) {
         System.out.println(saveOrderRequest);
@@ -41,19 +45,15 @@ public class OrderService {
                 })
                 .toList();
         BigDecimal totalCost = products.stream()
-                .map(productQuantity -> productQuantity.getProduct().getPrice().multiply(new BigDecimal(productQuantity.getQuantity())))
+                .map(productQuantity -> productQuantity
+                        .getProduct()
+                        .getPrice()
+                        .multiply(new BigDecimal(productQuantity.getQuantity()))
+                )
                 .reduce(BigDecimal::add)
                 .orElseThrow();
         Order createOrder = new Order(clock.instant(), orderNumber, totalCost, products);
         System.out.println(createOrder);
         return orderRepository.save(createOrder);
-    }
-
-    public Order addProduct(Order order) {
-        return null;
-    }
-
-    public Order deleteProductFromOrderByProductId(String productId) {
-        return null;
     }
 }

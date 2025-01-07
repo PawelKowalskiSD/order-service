@@ -46,7 +46,7 @@ class ProductServiceTest {
         Product productResponse = productService.upgradeProduct(product.getId(), productModify);
         //then
         verify(productRepository, times(1)).save(productResponse);
-//        verify(productService, times(1)).findProductById(product.getId());
+        verify(productRepository, times(1)).findById(productResponse.getId());
     }
     @Test
     void shouldDeleteProduct() {

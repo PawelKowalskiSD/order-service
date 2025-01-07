@@ -16,7 +16,8 @@ public class DtoMapper {
                         p.getId(),
                         p.getName(),
                         p.getPrice()
-                )).toList();
+                ))
+                .toList();
     }
 
     public Product mapToProduct(ProductDto productDto) {
@@ -46,6 +47,19 @@ public class DtoMapper {
                 .map(p -> new Product(
                         p.name(),
                         p.price()
-                )).toList();
+                ))
+                .toList();
+    }
+
+    public List<OrderDto> mapToListOrderDto(List<Order> allOrders) {
+        return allOrders.stream()
+                .map(order -> new OrderDto(
+                        order.getId(),
+                        order.getDateOfCreatedOrder(),
+                        order.getOrderNumber(),
+                        order.getTotalCost(),
+                        order.getProductQuantities()
+                ))
+                .toList();
     }
 }

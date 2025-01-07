@@ -7,6 +7,8 @@ import dev.pawel.orderservice.infrastucture.mapper.DtoMapper;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequestMapping(value = "/orders")
 public class OrderController {
@@ -24,18 +26,14 @@ public class OrderController {
         return ResponseEntity.ok(dtoMapper.mapToDtoOrder(orderService.findOrderById(orderId)));
     }
 
+    @GetMapping
+    public ResponseEntity<List<OrderDto>> findAllOrder() {
+        return ResponseEntity.ok(dtoMapper.mapToListOrderDto(orderService.findAllOrders()));
+    }
+
     @PostMapping
     public ResponseEntity<OrderDto> createOrder(@RequestBody SaveOrderRequest saveOrderRequest) {
         return ResponseEntity.ok(dtoMapper.mapToDtoOrder(orderService.create(saveOrderRequest)));
     }
 
-//    @PostMapping(value = "add")
-//    public ResponseEntity<OrderDto> addProductToOrder(@RequestBody OrderDto orderDto) {
-//        return ResponseEntity.ok(dtoMapper.mapToDtoOrder(orderService.addProduct(dtoMapper.mapToOrder(orderDto))));
-//    }
-
-    @DeleteMapping(value = "{productId}")
-    public ResponseEntity<OrderDto> deleteProduct(@PathVariable String productId) {
-        return ResponseEntity.ok(dtoMapper.mapToDtoOrder(orderService.deleteProductFromOrderByProductId(productId)));
-    }
 }
