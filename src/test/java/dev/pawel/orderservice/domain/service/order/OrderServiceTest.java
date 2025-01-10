@@ -1,8 +1,11 @@
 package dev.pawel.orderservice.domain.service.order;
 
+import dev.pawel.orderservice.controller.dto.OrderDto;
 import dev.pawel.orderservice.controller.dto.ProductQuantityRequest;
 import dev.pawel.orderservice.controller.dto.SaveOrderRequest;
 import dev.pawel.orderservice.domain.ProductQuantity;
+import dev.pawel.orderservice.domain.ProductQuantityResponse;
+import dev.pawel.orderservice.domain.SaveOrderResponse;
 import dev.pawel.orderservice.domain.order.model.Order;
 import dev.pawel.orderservice.domain.product.model.Product;
 import dev.pawel.orderservice.infrastucture.repository.order.OrderRepository;
@@ -101,13 +104,13 @@ class OrderServiceTest {
     @Test
     void shouldCreateOrder() {
         //Given
-        List<ProductQuantityRequest> products = new ArrayList<>();
+        List<ProductQuantityResponse> products = new ArrayList<>();
         Product bag = new Product("1", "bag", new BigDecimal("12"));
-        SaveOrderRequest saveOrder = new SaveOrderRequest(products);
-        products.add(new ProductQuantityRequest("1", 2));
-//        Order order1 = new Order("1", clock.instant(), "111230", new BigDecimal("24"), products);
+        products.add(new ProductQuantityResponse("1", 2));
+        SaveOrderResponse saveOrder = new SaveOrderResponse(products);
+        Order order1 = new Order("1", clock.instant(), "111230", new BigDecimal("24"), products);
         when(productRepository.findById(bag.getId())).thenReturn(Optional.of(bag));
-//        when(orderRepository.save(order1)).thenReturn(order1);
+        when(orderRepository.save(order1)).thenReturn(order1);
         //When
         Order result = orderService.create(saveOrder);
         //Then

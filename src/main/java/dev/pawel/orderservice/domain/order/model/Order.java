@@ -7,6 +7,7 @@ import java.math.BigDecimal;
 import java.time.Instant;
 import java.time.LocalDate;
 import java.util.List;
+import java.util.Objects;
 
 @Entity
 @Table(name = "orders")
@@ -72,6 +73,24 @@ public class Order {
 
     public BigDecimal getTotalCost() {
         return totalCost;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Order order = (Order) o;
+        return Objects.equals(id, order.id) && Objects.equals(dateOfCreatedOrder, order.dateOfCreatedOrder) && Objects.equals(orderNumber, order.orderNumber) && Objects.equals(totalCost, order.totalCost) && Objects.equals(productQuantities, order.productQuantities);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = Objects.hashCode(id);
+        result = 31 * result + Objects.hashCode(dateOfCreatedOrder);
+        result = 31 * result + Objects.hashCode(orderNumber);
+        result = 31 * result + Objects.hashCode(totalCost);
+        result = 31 * result + Objects.hashCode(productQuantities);
+        return result;
     }
 
     @Override

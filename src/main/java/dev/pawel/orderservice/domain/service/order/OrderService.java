@@ -2,6 +2,7 @@ package dev.pawel.orderservice.domain.service.order;
 
 import dev.pawel.orderservice.controller.dto.SaveOrderRequest;
 import dev.pawel.orderservice.domain.ProductQuantity;
+import dev.pawel.orderservice.domain.SaveOrderResponse;
 import dev.pawel.orderservice.domain.order.model.Order;
 import dev.pawel.orderservice.domain.product.model.Product;
 import dev.pawel.orderservice.infrastucture.repository.order.OrderRepository;
@@ -35,10 +36,10 @@ public class OrderService {
     }
 
     @Transactional
-    public Order create(SaveOrderRequest saveOrderRequest) {
-        System.out.println(saveOrderRequest);
+    public Order create(SaveOrderResponse saveOrderResponse) {
+        System.out.println(saveOrderResponse);
         String orderNumber = UUID.randomUUID().toString();
-        List<ProductQuantity> products = saveOrderRequest.products().stream()
+        List<ProductQuantity> products = saveOrderResponse.products().stream()
                 .map(p -> {
                     Product product = productRepository.findById(p.id()).orElseThrow();
                     return new ProductQuantity(product, p.quantity());
