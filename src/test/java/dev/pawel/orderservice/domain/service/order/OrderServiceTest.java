@@ -1,11 +1,8 @@
 package dev.pawel.orderservice.domain.service.order;
 
-import dev.pawel.orderservice.controller.dto.OrderDto;
 import dev.pawel.orderservice.controller.dto.ProductQuantityRequest;
 import dev.pawel.orderservice.controller.dto.SaveOrderRequest;
 import dev.pawel.orderservice.domain.ProductQuantity;
-import dev.pawel.orderservice.domain.ProductQuantityResponse;
-import dev.pawel.orderservice.domain.SaveOrderResponse;
 import dev.pawel.orderservice.domain.order.model.Order;
 import dev.pawel.orderservice.domain.product.model.Product;
 import dev.pawel.orderservice.infrastucture.repository.order.OrderRepository;
@@ -50,6 +47,10 @@ class OrderServiceTest {
         //When
         Order result = orderService.findOrderById(order1.getId());
         //Then
+        assertEquals("1", result.getId());
+        assertEquals("111230", result.getOrderNumber());
+        assertEquals(new BigDecimal("24"), result.getTotalCost());
+        assertEquals(1, result.getProductQuantities().size());
         verify(orderRepository, times(1)).findById(result.getId());
         verify(clock, times(1)).instant();
     }
@@ -97,6 +98,9 @@ class OrderServiceTest {
         //When
         List<Order> result = orderService.findAllOrders();
         //Then
+        assertEquals("1", result.getFirst().getId());
+        assertEquals("111230", result.getFirst().getOrderNumber());
+        assertEquals(new BigDecimal("24"), result.getFirst().getTotalCost());
         assertEquals(2, result.size());
         verify(orderRepository, times(1)).findAll();
     }
@@ -104,17 +108,27 @@ class OrderServiceTest {
     @Test
     void shouldCreateOrder() {
         //Given
-        List<ProductQuantityResponse> products = new ArrayList<>();
+        List<ProductQuantity> productsQuantity = new ArrayList<>();
         Product bag = new Product("1", "bag", new BigDecimal("12"));
-        products.add(new ProductQuantityResponse("1", 2));
-        SaveOrderResponse saveOrder = new SaveOrderResponse(products);
-        Order order1 = new Order("1", clock.instant(), "111230", new BigDecimal("24"), products);
+        productsQuantity.add(new ProductQuantity(bag, 2));
+
+        List<ProductQuantityRequest> productsQuantityRequest = new ArrayList<>();
+        productsQuantityRequest.add(new ProductQuantityRequest("1", 2));
+
+        SaveOrderRequest saveOrder = new SaveOrderRequest(productsQuantityRequest);
+        Order firstOrder = new Order("1", clock.instant(), "111230", new BigDecimal("24"), productsQuantity);
+
         when(productRepository.findById(bag.getId())).thenReturn(Optional.of(bag));
-        when(orderRepository.save(order1)).thenReturn(order1);
+        when(orderRepository.save(any(Order.class))).thenReturn(firstOrder);
         //When
         Order result = orderService.create(saveOrder);
         //Then
+        assertEquals("1", result.getId());
+        assertEquals("111230", result.getOrderNumber());
+        assertEquals(new BigDecimal("24"), result.getTotalCost());
+        assertEquals(1, result.getProductQuantities().size());
         verify(productRepository, times(1)).findById(bag.getId());
-        verify(orderRepository, times(1)).save(result);
+        verify(orderRepository, times(1)).save(any(Order.class));
+        System.out.println(result);
     }
 }

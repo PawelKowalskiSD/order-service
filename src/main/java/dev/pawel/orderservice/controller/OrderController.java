@@ -3,8 +3,8 @@ package dev.pawel.orderservice.controller;
 import dev.pawel.orderservice.controller.dto.OrderDto;
 import dev.pawel.orderservice.controller.dto.SaveOrderRequest;
 import dev.pawel.orderservice.domain.service.order.OrderService;
-import dev.pawel.orderservice.infrastucture.mapper.ConvertSaveOrderResponse;
 import dev.pawel.orderservice.infrastucture.mapper.DtoMapper;
+import org.springframework.core.convert.ConversionService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,12 +16,12 @@ public class OrderController {
 
     private final DtoMapper dtoMapper;
     private final OrderService orderService;
-    private final ConvertSaveOrderResponse convertSaveOrderResponse;
+    private final ConversionService conversionService;
 
-    public OrderController(DtoMapper dtoMapper, OrderService orderService, ConvertSaveOrderResponse convertSaveOrderResponse) {
+    public OrderController(DtoMapper dtoMapper, OrderService orderService, ConversionService conversionService) {
         this.dtoMapper = dtoMapper;
         this.orderService = orderService;
-        this.convertSaveOrderResponse = convertSaveOrderResponse;
+        this.conversionService = conversionService;
     }
 
     @GetMapping(value = "{orderId}")
@@ -36,7 +36,7 @@ public class OrderController {
 
     @PostMapping
     public ResponseEntity<OrderDto> createOrder(@RequestBody SaveOrderRequest saveOrderRequest) {
-        return ResponseEntity.ok(dtoMapper.mapToDtoOrder(orderService.create(convertSaveOrderResponse.convert(saveOrderRequest))));
+        return ResponseEntity.ok(conversionService.convert(orderService.create(saveOrderRequest), OrderDto.class));
     }
 
 }

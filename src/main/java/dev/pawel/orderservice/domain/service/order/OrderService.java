@@ -36,10 +36,10 @@ public class OrderService {
     }
 
     @Transactional
-    public Order create(SaveOrderResponse saveOrderResponse) {
-        System.out.println(saveOrderResponse);
+    public Order create(SaveOrderRequest saveOrderRequest) {
+        System.out.println(saveOrderRequest);
         String orderNumber = UUID.randomUUID().toString();
-        List<ProductQuantity> products = saveOrderResponse.products().stream()
+        List<ProductQuantity> products = saveOrderRequest.products().stream()
                 .map(p -> {
                     Product product = productRepository.findById(p.id()).orElseThrow();
                     return new ProductQuantity(product, p.quantity());
