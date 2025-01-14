@@ -7,6 +7,7 @@ import dev.pawel.orderservice.domain.order.model.Order;
 import dev.pawel.orderservice.domain.product.model.Product;
 import dev.pawel.orderservice.infrastucture.repository.order.OrderRepository;
 import dev.pawel.orderservice.infrastucture.repository.product.ProductRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -15,6 +16,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.math.BigDecimal;
 import java.time.Clock;
+import java.time.ZoneId;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -25,7 +27,6 @@ import static org.mockito.Mockito.*;
 @ExtendWith(MockitoExtension.class)
 class OrderServiceTest {
 
-    @InjectMocks
     private OrderService orderService;
 
     @Mock
@@ -34,8 +35,12 @@ class OrderServiceTest {
     @Mock
     private ProductRepository productRepository;
 
-    @Mock
-    private Clock clock;
+    private final Clock clock = Clock.system(ZoneId.of("Europe/Warsaw"));
+
+    @BeforeEach
+    void setUp() {
+        orderService = new OrderService(orderRepository, clock, productRepository);
+    }
 
     @Test
     void shouldFindOrderById() {
@@ -52,7 +57,6 @@ class OrderServiceTest {
         assertEquals(new BigDecimal("24"), result.getTotalCost());
         assertEquals(1, result.getProductQuantities().size());
         verify(orderRepository, times(1)).findById(result.getId());
-        verify(clock, times(1)).instant();
     }
 
     @Test

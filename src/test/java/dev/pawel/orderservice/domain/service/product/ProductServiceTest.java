@@ -32,18 +32,21 @@ class ProductServiceTest {
         //When
         Product productResponse = productService.findProductById(product.getId());
         //Then
+        assertEquals(product.getId(), productResponse.getId());
+        assertEquals(product.getPrice(), productResponse.getPrice());
+        assertEquals(product.getName(), productResponse.getName());
         verify(productRepository, times(1)).findById(productResponse.getId());
     }
 
     @Test
-    void shouldUpgradeProduct() {
+    void shouldUpdateProduct() {
         //Given
         Product product = new Product("123", "product1", new BigDecimal("20"));
         Product productModify = new Product("123", "product2", new BigDecimal("12"));
         when(productRepository.findById(product.getId())).thenReturn(Optional.of(product));
         when(productRepository.save(productModify)).thenReturn(productModify);
         //when
-        Product productResponse = productService.upgradeProduct(product.getId(), productModify);
+        Product productResponse = productService.updateProduct(product.getId(), productModify);
         //then
         verify(productRepository, times(1)).save(productResponse);
         verify(productRepository, times(1)).findById(productResponse.getId());

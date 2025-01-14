@@ -20,6 +20,10 @@ public class ProductService {
     }
 
     public Product create(Product product) {
+        if(product.getName().trim().length() < 3)
+            throw new RuntimeException("Too short product name: " + product.getName());
+        if(product.getPrice().compareTo(BigDecimal.ZERO) < 1 || product.getPrice().toString().split("\\.")[1].length() > 2)
+            throw new RuntimeException("Invalid product price: " + product.getPrice());
         return productRepository.save(product);
     }
 
@@ -27,12 +31,12 @@ public class ProductService {
         productRepository.deleteById(productId);
     }
 
-    public Product upgradeProduct(String productId, Product product) {
+    public Product updateProduct(String productId, Product product) {
         Product productInDatabase = productRepository.findById(productId).orElseThrow();
         String name = product.getName() != null ? product.getName() : productInDatabase.getName();
         BigDecimal price = product.getPrice() != null ? product.getPrice() : productInDatabase.getPrice();
-        Product upgradedProduct = new Product(productId, name, price);
-        return productRepository.save(upgradedProduct);
+        Product updatedProduct = new Product(productId, name, price);
+        return productRepository.save(updatedProduct);
     }
 
     public Product findProductById(String productId) {
