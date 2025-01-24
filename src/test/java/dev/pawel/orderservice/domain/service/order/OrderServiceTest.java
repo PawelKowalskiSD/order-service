@@ -133,6 +133,5 @@ class OrderServiceTest {
         assertEquals(1, result.getProductQuantities().size());
         verify(productRepository, times(1)).findById(bag.getId());
         verify(orderRepository, times(1)).save(any(Order.class));
-        System.out.println(result);
     }
 }

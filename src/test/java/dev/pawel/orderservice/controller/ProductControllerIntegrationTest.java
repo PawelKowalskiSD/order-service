@@ -52,4 +52,16 @@ class ProductControllerIntegrationTest {
                 .jsonPath("$.message")
                 .value(message -> assertEquals("Too short product name: " + productDto.name(), message));
     }
+
+    @Test
+    void shouldFindProduct() {
+        //Given
+        ProductDto productDto = new ProductDto(null, "pe", new BigDecimal("10.1"));
+        //When & Then
+        webTestClient.get()
+                .exchange().expectStatus().is2xxSuccessful()
+                .expectBody()
+                .jsonPath("$.message")
+                .value(message -> assertEquals())
+    }
 }

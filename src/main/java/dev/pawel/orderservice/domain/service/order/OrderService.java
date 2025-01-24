@@ -2,7 +2,6 @@ package dev.pawel.orderservice.domain.service.order;
 
 import dev.pawel.orderservice.controller.dto.SaveOrderRequest;
 import dev.pawel.orderservice.domain.ProductQuantity;
-import dev.pawel.orderservice.domain.SaveOrderResponse;
 import dev.pawel.orderservice.domain.order.model.Order;
 import dev.pawel.orderservice.domain.product.model.Product;
 import dev.pawel.orderservice.infrastucture.repository.order.OrderRepository;

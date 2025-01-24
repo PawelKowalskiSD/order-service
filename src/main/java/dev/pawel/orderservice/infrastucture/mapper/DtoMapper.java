@@ -2,8 +2,6 @@ package dev.pawel.orderservice.infrastucture.mapper;
 
 import dev.pawel.orderservice.controller.dto.OrderDto;
 import dev.pawel.orderservice.controller.dto.ProductDto;
-import dev.pawel.orderservice.controller.dto.SaveOrderRequest;
-import dev.pawel.orderservice.domain.SaveOrderResponse;
 import dev.pawel.orderservice.domain.order.model.Order;
 import dev.pawel.orderservice.domain.product.model.Product;
 import org.springframework.stereotype.Service;
