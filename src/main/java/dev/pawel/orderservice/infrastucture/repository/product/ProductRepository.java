@@ -1,4 +1,4 @@
-package dev.pawel.orderservice.infrastucture.repository;
+package dev.pawel.orderservice.infrastucture.repository.product;
 
 import dev.pawel.orderservice.domain.product.model.Product;
 import org.springframework.data.jpa.repository.JpaRepository;
